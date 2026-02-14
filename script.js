@@ -293,6 +293,125 @@ let canVote = age >= 18 ? "Yes" : "No";
 
 console.log("Can vote? " + canVote); // Yes`,
   },
+  {
+    title: "DOM Manipulation",
+    explanation:
+      "Access and change HTML elements dynamically using JavaScript.",
+    code: `// Select an element by ID
+const heading = document.getElementById("title");
+
+// Change its text content
+heading.textContent = "Hello, DOM!";`,
+  },
+  {
+    title: "Event Listeners",
+    explanation: "Respond to user actions like clicks and key presses.",
+    code: `// Select a button
+const btn = document.getElementById("myBtn");
+
+// Listen for click events
+btn.addEventListener("click", function() {
+  console.log("Button clicked!");
+});`,
+  },
+  {
+    title: "setTimeout & setInterval",
+    explanation: "Run code after a delay or repeatedly.",
+    code: `// Run once after 2 seconds
+setTimeout(() => console.log("Delayed!"), 2000);
+
+// Repeat every second
+const intervalId = setInterval(() => console.log("Tick"), 1000);
+
+// Stop the interval after 5 seconds
+setTimeout(() => clearInterval(intervalId), 5000);`,
+  },
+  {
+    title: "Async / Await",
+    explanation: "Handle asynchronous operations in a cleaner way.",
+    code: `// Simulate async operation
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function asyncExample() {
+  console.log("Start");
+  await wait(1000); // wait 1 second
+  console.log("1 second later");
+}
+
+asyncExample();`,
+  },
+  {
+    title: "Fetch API",
+    explanation: "Fetch data from a server using JavaScript.",
+    code: `// Fetch JSON data from an API
+fetch("https://jsonplaceholder.typicode.com/todos/1")
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error("Error:", error));`,
+  },
+  {
+    title: "Local Storage",
+    explanation: "Store data locally in the browser.",
+    code: `// Save data
+localStorage.setItem("username", "Alex");
+
+// Retrieve data
+console.log(localStorage.getItem("username")); // Alex
+
+// Remove data
+localStorage.removeItem("username");`,
+  },
+  {
+    title: "Classes",
+    explanation: "Define blueprints for objects using modern JS syntax.",
+    code: `class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  greet() {
+    console.log(\`Hello, my name is \${this.name}\`);
+  }
+}
+
+const john = new Person("John", 25);
+john.greet();`,
+  },
+  {
+    title: "Modules (ES6)",
+    explanation: "Organize code into separate files and import/export them.",
+    code: `// In file math.js
+export function add(a, b) { return a + b; }
+
+// In main.js
+import { add } from './math.js';
+console.log(add(5, 10)); // 15`,
+  },
+  {
+    title: "Error Handling (try/catch)",
+    explanation: "Gracefully handle runtime errors.",
+    code: `try {
+  let result = riskyFunction();
+  console.log(result);
+} catch(error) {
+  console.error("Something went wrong:", error);
+}`,
+  },
+  {
+    title: "Promises",
+    explanation: "Handle async operations without callback hell.",
+    code: `const p = new Promise((resolve, reject) => {
+  const success = true;
+  if(success) resolve("Done!");
+  else reject("Failed!");
+});
+
+p.then(msg => console.log(msg))
+ .catch(err => console.error(err));`,
+  },
 ];
 
 /**
@@ -425,6 +544,11 @@ function markLessonAsDone(index) {
 
 // Add this inside your showSuccessToast() function or keep the one from the previous step.
 function showSuccessToast() {
+  // 1. Play the celebration sound
+  const audio = new Audio("/assets/success.mp3");
+  audio.play();
+
+  // 2. Create the visual toast
   const toast = document.createElement("div");
   toast.className = "success-toast";
   toast.innerHTML = `
