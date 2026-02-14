@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Basic Meta Settings -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodeKids JS | Final Master Edition</title>
+
+    <!-- CodeMirror Core Styles -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.css"
+    />
+
+    <!-- CodeMirror Themes -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/theme/dracula.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/theme/neo.min.css"
+    />
+
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- CodeMirror Core Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.js"></script>
+
+    <!-- JavaScript Mode for CodeMirror -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/mode/javascript/javascript.min.js"></script>
+  </head>
+
+  <!-- Default theme is light -->
+  <body data-theme="light">
+    <!-- Authentication Overlay (Login / Sign Up) -->
+    <div id="auth-overlay" class="auth-overlay">
+      <div class="auth-card">
+        <!-- Tabs for switching between Login and Sign Up -->
+        <div class="auth-tabs">
+          <button
+            id="tab-login"
+            class="auth-tab active"
+            onclick="switchAuth('login')"
+          >
+            Login
+          </button>
+
+          <button
+            id="tab-signup"
+            class="auth-tab"
+            onclick="switchAuth('signup')"
+          >
+            Sign Up
+          </button>
+        </div>
+
+        <!-- Login Form -->
+        <form
+          id="login-form"
+          class="auth-form"
+          onsubmit="handleAuth(event, 'login')"
+        >
+          <h2>Welcome Back! 🚀</h2>
+
+          <!-- Email Input -->
+          <input
+            type="email"
+            id="l-email"
+            placeholder="Email Address"
+            required
+          />
+
+          <!-- Password Input -->
+          <input type="password" id="l-pass" placeholder="Password" required />
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-auth">Login to Code</button>
+        </form>
+
+        <!-- Sign Up Form -->
+        <form
+          id="signup-form"
+          class="auth-form hidden"
+          onsubmit="handleAuth(event, 'signup')"
+        >
+          <h2>Join Code4Kids JS 🌟</h2>
+
+          <!-- Full Name Input -->
+          <input type="text" id="s-name" placeholder="Full Name" required />
+
+          <!-- Email Input -->
+          <input
+            type="email"
+            id="s-email"
+            placeholder="Email Address"
+            required
+          />
+
+          <!-- Password Input -->
+          <input
+            type="password"
+            id="s-pass"
+            placeholder="Create Password"
+            required
+          />
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-auth">Create Account</button>
+
+          <!-- Social Media Sign Up Section -->
+          <div class="social-login">
+            <p>Or sign up with</p>
+
+            <div class="social-icons">
+              <!-- Facebook Button -->
+              <a href="#" class="social-btn fb">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+
+              <!-- Google Button -->
+              <a href="#" class="social-btn google">
+                <i class="fab fa-google"></i>
+              </a>
+
+              <!-- GitHub Button -->
+              <a href="#" class="social-btn github">
+                <i class="fab fa-github"></i>
+              </a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Main Header -->
+    <header>
+      <!-- Website Logo -->
+      <div
+        class="logo"
+        style="font-size: 1.6rem; font-weight: 900; letter-spacing: -1px"
+      >
+        CODE4KIDS <span style="color: var(--accent, #f1c40f)">JS</span>
+      </div>
+
+      <!-- Header Controls (Theme + Logout) -->
+      <div
+        class="header-controls"
+        style="display: flex; align-items: center; gap: 15px"
+      >
+        <!-- Theme Toggle Button -->
+        <div
+          class="theme-toggle-btn"
+          onclick="toggleTheme()"
+          title="Toggle Theme"
+        >
+          <i class="fas fa-sun sun-icon"></i>
+          <i class="fas fa-moon moon-icon"></i>
+        </div>
+
+        <!-- Logout Button -->
+        <button class="btn-logout" onclick="logout()" title="Logout">
+          <i class="fas fa-sign-out-alt"></i>
+          <span class="logout-text">Logout</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="layout">
+      <!-- Sidebar (Lessons Menu) -->
+      <aside class="sidebar" id="lesson-menu">
+        <h4 style="margin: 0 0 15px 0; opacity: 0.5">JS MASTERY PATH</h4>
+      </aside>
+
+      <!-- Code Editor Panel -->
+      <main class="panel">
+        <!-- Panel Header -->
+        <div class="panel-header">
+          <span id="lesson-title">Code Editor</span>
+
+          <!-- Voice Controls -->
+          <div class="voice-controls" style="display: flex; gap: 5px">
+            <button class="btn btn-voice" onclick="playVoice()">Explain</button>
+
+            <button class="btn btn-stop" onclick="stopVoice()">Stop</button>
+          </div>
+        </div>
+
+        <!-- Code Editor Textarea (Used by CodeMirror) -->
+        <textarea id="editor"></textarea>
+
+        <!-- Control Buttons -->
+        <div class="controls">
+          <!-- Run Code Button -->
+          <button class="btn btn-run" onclick="runJS()">Run Code ▶</button>
+
+          <!-- Clear Console Button -->
+          <button
+            class="btn btn-clear"
+            style="background: #94a3b8; color: white"
+            onclick="clearConsole()"
+          >
+            Clear
+          </button>
+        </div>
+      </main>
+
+      <!-- Output Console Panel -->
+      <aside class="panel">
+        <div class="panel-header">Output Console</div>
+        <div id="console" class="console-output"></div>
+      </aside>
+    </div>
+
+    <!-- Main JavaScript File -->
+    <script src="script.js"></script>
+  </body>
+</html>
